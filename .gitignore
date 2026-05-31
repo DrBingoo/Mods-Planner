@@ -1,0 +1,11 @@
+# Ignore environment file
+.env
+
+# Ignore node modules
+node_modules/
+bin/
+obj/
+
+# Ignore all files ending in a specific extension
+*.log
+*.tmp
