@@ -1,0 +1,11 @@
+<header>
+    <h2 style="color: gold">Mods Planner</h2>
+    <nav>
+        <a href="/">My Plan</a>
+    </nav>
+    <% if(username){ %>
+        <a href="/profile" class="header-btn"><%= username %></a>
+    <% } else{ %>
+        <a href="/register" class="header-btn">Register/Login</a>
+    <% } %>
+</header>
