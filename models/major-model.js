@@ -24,6 +24,10 @@ function updateMod(){
     return Major.findByIdAndUpdate()
 }
 
+function getAllMajorTitles(){
+    return Major.find().select('title')
+}
+
 module.exports = {
-    addMajor, updateMod
+    addMajor, updateMod, getAllMajorTitles
 }

@@ -1,0 +1,16 @@
+.error-group{
+    padding: 15px;
+    max-width: 80vw;
+    margin: auto;
+}
+
+.error-group h1{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.error-group p{
+    text-align: center;
+    color: red;
+    font-size: 1.4rem;
+}

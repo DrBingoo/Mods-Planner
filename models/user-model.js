@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
-    userId: {
+    _id: {
         type: String,
         required: true,
         trim: true,
-        alias: '_id'
+        alias: 'userId'
     },
-    name: {
+    username: {
         type: String,
         required: true,
         trim: true
@@ -14,7 +14,13 @@ const userSchema = new mongoose.Schema({
     major: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        trim: true,
         ref: 'Major'
+    },
+    password: {
+        type: String,
+        required: true,
+        trim: true
     },
     role: {
         type: 'String',
@@ -24,3 +30,15 @@ const userSchema = new mongoose.Schema({
         default: 'STUDENT'
     }
 })
+
+const User = mongoose.model('user', userSchema)
+
+function createUser(user){
+    return User.create(user)
+}
+
+function getUserById(userId){
+    return User.findById(userId)
+}
+
+module.exports = { createUser, getUserById }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <title>Mods Planner</title>
+</head>
+<body>
+    <%- include('../partials/nav.ejs') %>
+    <form action="/login" method="POST">
+        <div class="form-group">
+            <label for="userId">Student/Staff ID</label>
+            <input id="userId" , name="userId" type="text" placeholder="Student/Staff ID" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" , name="password" type="password" placeholder="Password" required>
+        </div>
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="/register" style="color: lightskyblue;">Register</a></p>
+        <span class="error" margin-top: 8px;"><%= errormsg ? errormsg : '' %></span>
+    </form>
+</body>
+</html>

@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const session = require('express-session')
 const modsRoutes = require('./routes/mods-routes')
+const userRoutes = require('./routes/user-routes')
 const server = express()
 
 dotenv.config()
@@ -29,10 +30,11 @@ server.use((req, res, next) => {
 
 //routes
 server.use(modsRoutes)
+server.use(userRoutes)
 
 //404 fallback
 server.use((req, res) => {
-    res.status(404).json({message: '404'})
+    res.status(404).render('error', {message: 'Path not found'})
 })
 
 async function connectdbStartServer(){
