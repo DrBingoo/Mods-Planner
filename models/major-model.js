@@ -28,6 +28,10 @@ function getAllMajorTitles(){
     return Major.find().select('title')
 }
 
+function getMajor(majorId){
+    return Major.findById(majorId).populate('modulesToClear')
+}
+
 module.exports = {
-    addMajor, updateMod, getAllMajorTitles
+    addMajor, updateMod, getAllMajorTitles, getMajor
 }

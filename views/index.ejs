@@ -10,153 +10,36 @@
 </head>
 <body>
     <%- include('./partials/nav.ejs') %>
+    <h2>Plan for <%= userMajor.title %></h2>
     <section class="all-modules" id="all-modules">
-        <div class="module" draggable="true" id="SE101">
-            <b>SE101</b>
-            <p>Operating Sytems & Networking</p>
-        </div>
-        <div class="module" draggable="true" id="IS115">
-            <b>IS115</b>
-            <p>Algorithms and Programming</p>
-        </div>
-        <div class="module" draggable="true" id="CS203">
-            <b>CS203</b>
-            <p>Human-AI Collaborative Software Development</p>
-        </div>
-        <div class="module" draggable="true" id="IS113">
-            <b>IS113</b>
-            <p>Web Application Development I</p>
-        </div>
-        <div class="module" draggable="true" id="CS440">
-            <b>CS440</b>
-            <p>Foundations of Cybersecurity</p>
-        </div>
-        <div class="module" draggable="true" id="SE301">
-            <b>SE301</b>
-            <p>Advanced Programming & Design</p>
-        </div>
+        <% userMajor.modulesToClear.forEach(module => { %>
+            <% if(!IdsInModulePlan.has(module._id)){ %>
+                <div class="module" draggable="true" id="<%= module._id %>">
+                    <b><%= module._id %></b>
+                    <p><%= module.title %></p>
+                </div>
+            <% } %>
+        <% }) %>
     </section>
     <section class="plan-modules">
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <!-- <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div> -->
-            </div>
-        </div>
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS115</b>
-                    <p>Algorithms and Programming</p>
-                </div>
-            </div>
-        </div>
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div>
-            </div>
-        </div>
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS115</b>
-                    <p>Algorithms and Programming</p>
-                </div>
-            </div>
-        </div>
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div>
-            </div>
-        </div>
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS115</b>
-                    <p>Algorithms and Programming</p>
-                </div>
-            </div>
-        </div>
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div>
-            </div>
-        </div>
-        <div class="semester">
-            <p>Year 1 Sem 1</p>
-            <div>
-                <div class="module" draggable="true">
-                    <b>CS203</b>
-                    <p>Human-AI Collaborative Software Development</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS113</b>
-                    <p>Web Application Development I</p>
-                </div>
-                <div class="module" draggable="true">
-                    <b>IS115</b>
-                    <p>Algorithms and Programming</p>
-                </div>
-            </div>
-        </div>
+        <% for(let year = 1; year < 5; year++){ %>
+            <% for(let sem = 1; sem < 3; sem++){ %>
+                    <% let yearSem = `Y${year}S${sem}` %>
+                    <div class="semester" id="<%= yearSem %>">
+                        <p>Year <%= year %> Sem <%= sem %></p>
+                        <div>
+                            <% modulePlan[yearSem].forEach((module) => { %>
+                                <div class="module" draggable="true" id="<%= module._id %>">
+                                    <b><%= module._id %></b>
+                                    <p><%= module.title %></p>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+            <% } %>
+        <% } %>
     </section>
+    <br><br>
+    <button id="submitBtn">Submit Module Plan</button>
 </body>
 </html>

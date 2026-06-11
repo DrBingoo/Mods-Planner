@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const session = require('express-session')
-const modsRoutes = require('./routes/mods-routes')
+const moduleRoutes = require('./routes/module-routes')
 const userRoutes = require('./routes/user-routes')
 const server = express()
 
@@ -29,7 +29,7 @@ server.use((req, res, next) => {
 })
 
 //routes
-server.use(modsRoutes)
+server.use(moduleRoutes)
 server.use(userRoutes)
 
 //404 fallback

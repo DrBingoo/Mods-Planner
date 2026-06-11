@@ -18,7 +18,7 @@ async function registerUser(req, res) {
             await userModel.createUser({
                 userId: req.body.userId,
                 username: req.body.username,
-                major: req.body.major,
+                majorId: req.body.majorId,
                 password: passwordHash
             })
             res.redirect('/login')
@@ -39,8 +39,8 @@ async function loginUser(req, res){
             req.session.user = { 
                 userId: user.userId, 
                 username: user.username, 
-                major: user.major,
-                role: user.role 
+                majorId: user.majorId,
+                role: user.role,
             }
             res.redirect('/')
         }else{
@@ -61,14 +61,14 @@ function logoutUser(req, res){
 
 function validateInput(user){
     let errors = {}
-    const { userId, username, major, password, confirmPassword } = user
+    const { userId, username, majorId, password, confirmPassword } = user
     if(!userId?.trim()){
         errors.userId = 'ID required'
     }
     if(!username?.trim()){
         errors.username = 'Username requied'
     }
-    if(!major?.trim()){
+    if(!majorId?.trim()){
         errors.major = 'Major required'
     }
     if(!password?.trim()){
