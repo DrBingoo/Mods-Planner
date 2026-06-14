@@ -3,18 +3,18 @@ const majorModel = require('../models/major-model')
 const bcrypt = require('bcrypt')
 
 async function displayRegister(req, res){
-    let allMajorTitles = await majorModel.getAllMajorTitles()
+    const allMajorTitles = await majorModel.getAllMajorTitles()
     res.render('auth/register', {errors: undefined, allMajorTitles})
 }
 
 async function registerUser(req, res) {
-    const errors = validateInput(req.body)
+    const errors = await validateInput(req.body)
     if(Object.keys(errors).length > 0){
-        let allMajorTitles = await majorModel.getAllMajorTitles()
+        const allMajorTitles = await majorModel.getAllMajorTitles()
         res.render('auth/register', {errors, allMajorTitles})
     }else{
         try{
-            let passwordHash = await bcrypt.hash(req.body.password.trim(), 10)
+            const passwordHash = await bcrypt.hash(req.body.password.trim(), 10)
             await userModel.createUser({
                 userId: req.body.userId,
                 username: req.body.username,
@@ -32,7 +32,7 @@ async function registerUser(req, res) {
 async function loginUser(req, res){
     const {userId, password} = req.body
     if(userId?.trim()){
-        let user = await userModel.getUserById(userId.trim())
+        const user = await userModel.getUserById(userId.trim())
         if(!user) return res.render('auth/login', {errormsg: 'User not found'})
 
         if(await bcrypt.compare(password, user.password)){
@@ -59,7 +59,7 @@ function logoutUser(req, res){
     })
 }
 
-function validateInput(user){
+async function validateInput(user){
     let errors = {}
     const { userId, username, majorId, password, confirmPassword } = user
     if(!userId?.trim()){
@@ -70,6 +70,10 @@ function validateInput(user){
     }
     if(!majorId?.trim()){
         errors.major = 'Major required'
+    }else{
+        if(!await majorModel.majorExists(majorId.trim())){
+            errors.major = "Invalid Major ID"
+        }
     }
     if(!password?.trim()){
         errors.password = 'Password required'

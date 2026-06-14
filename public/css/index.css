@@ -60,3 +60,8 @@ button{
 button:hover{
     background-color: var(--primary-button-hover-color);
 }
+
+button.disable{
+    opacity: 0.5;
+    cursor: not-allowed;
+}

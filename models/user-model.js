@@ -55,4 +55,8 @@ function getUserModulePlan(userId){
     return User.findById(userId).populate({path: 'modulePlan', populate: 'Y1S1 Y1S2 Y2S1 Y2S2 Y3S1 Y3S2 Y4S1 Y4S2'})
 }
 
-module.exports = { createUser, getUserById, getUserModulePlan }
+function updateUserModulePlan(userId, newModulePlan){
+    return User.findByIdAndUpdate(userId, { modulePlan: newModulePlan}, {runValidators: true})
+}
+
+module.exports = { createUser, getUserById, getUserModulePlan, updateUserModulePlan }

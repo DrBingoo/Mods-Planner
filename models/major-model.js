@@ -32,6 +32,14 @@ function getMajor(majorId){
     return Major.findById(majorId).populate('modulesToClear')
 }
 
+function getModulesToClear(majorId){
+    return Major.findById(majorId).select('modulesToClear')
+}
+
+function majorExists(majorId){
+    return Major.exists({ _id: majorId })
+}
+
 module.exports = {
-    addMajor, updateMod, getAllMajorTitles, getMajor
+    addMajor, updateMod, getAllMajorTitles, getMajor, getModulesToClear, majorExists
 }

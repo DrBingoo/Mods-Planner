@@ -1,12 +1,12 @@
 var modulePlan = {
     Y1S1: new Set(),
     Y1S2: new Set(),
-    Y2S2: new Set(),
     Y2S1: new Set(),
-    Y3S2: new Set(),
+    Y2S2: new Set(),
     Y3S1: new Set(),
-    Y4S2: new Set(),
+    Y3S2: new Set(),
     Y4S1: new Set(),
+    Y4S2: new Set(),
 }
 
 const modules = document.querySelectorAll('.module')
@@ -49,10 +49,15 @@ semestersContainers.forEach((sc) => {
 
         if(moduleElement.closest('.semester') === event.currentTarget) return ;
 
+        const moduleParentId = event.dataTransfer.getData('moduleParentId')
         try{
+            if(moduleParentId){
+                modulePlan[moduleParentId].delete(moduleCode)
+            }
             modulePlan[sc.id].add(moduleCode)
             sc.lastElementChild.appendChild(moduleElement)
         }catch(error){
+            console.log(error)
             alert("Failed to modify modules, Plese refresh and try again")
         }
     })
@@ -63,6 +68,23 @@ semestersContainers.forEach((sc) => {
     }
 })
 
-document.getElementById('submitBtn').addEventListener('click', (event) => {
-    event.currentTarget.disabled = true
+document.getElementById('submitBtn').addEventListener('click', async (event) => {
+    event.target.disabled = true
+    event.target.classList.add('disable')
+    for(yearSem of Object.keys(modulePlan)){
+        modulePlan[yearSem] = [...modulePlan[yearSem]]
+    }
+    try{
+        const response = await fetch('/modules-plan', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify(modulePlan)
+        })
+        const result = await response.json()
+        response.ok ? alert("Plan updated sucessfully") : alert(result.message)
+    }catch(error){
+        console.log(error)
+        alert('Failed to send request to server. Please refresh and try again')
+    }
+    location.reload()
 })

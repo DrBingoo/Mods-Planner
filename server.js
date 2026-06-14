@@ -10,8 +10,8 @@ dotenv.config()
 
 server.use(express.static('public'))
 server.set('view engine', 'ejs')
-server.use(express.urlencoded({ extended: true }))
-server.use(express.json())
+server.use(express.urlencoded({ extended: true, limit: '10kb' }))
+server.use(express.json({ limit: '10kb' }))
 server.use(session({
     secret: process.env.SECRET,
     resave: false,

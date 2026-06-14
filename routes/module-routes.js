@@ -5,10 +5,7 @@ const router = express.Router()
 
 router.get('/', authMiddleware.isLoggedIn, moduleController.displayModulePage)
 
-router.post('/mod', async (req, res) => {
-    await majorModel.updateMod()
-    res.json({message: 'success'})
-})
+router.post('/modules-plan', authMiddleware.isLoggedIn, moduleController.updateModulePlan)
 
 router.get('/mod', async(req,res) => {
     
